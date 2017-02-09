@@ -3,6 +3,7 @@ package com.example.user.myapplication;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_NAME = "example_key";
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
-
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
             FingerprintHandler helper = new FingerprintHandler(this);
             helper.startAuth(fingerprintManager, cryptoObject);
         }
-
     }
-
     @TargetApi(Build.VERSION_CODES.M)
     protected void generateKey() {
         try {
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(
                     "Failed to get KeyGenerator instance", e);
         }
-
+//
         try {
             keyStore.load(null);
             keyGenerator.init(new
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-
+//
     @TargetApi(Build.VERSION_CODES.M)
     public boolean cipherInit() {
         try {
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 NoSuchPaddingException e) {
             throw new RuntimeException("Failed to get Cipher", e);
         }
-
+//
         try {
             keyStore.load(null);
             SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME,
@@ -160,5 +159,4 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException("Failed to init Cipher", e);
         }
     }
-
 }
